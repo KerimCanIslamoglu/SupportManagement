@@ -27,10 +27,10 @@ namespace SupportManagement.DataAccess.Context
                .WithOne(tm => tm.Seniority)
                .HasForeignKey<TeamMember>(fk => fk.SeniorityId);
 
-            modelBuilder.Entity<Chat>()
-                .HasOne(t => t.TeamMember)
-                .WithMany(tm => tm.Chats)
-                .HasForeignKey(fk => fk.TeamMemberId);
+            //modelBuilder.Entity<Chat>()
+            //    .HasOne(t => t.TeamMember)
+            //    .WithMany(tm => tm.Chats)
+            //    .HasForeignKey(fk => fk.TeamMemberId);
 
             modelBuilder.Entity<Seniority>().HasData(
               new Seniority

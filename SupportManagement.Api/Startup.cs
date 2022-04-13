@@ -40,8 +40,10 @@ namespace SupportManagement.Api
             services.AddDbContext<ApplicationDbContext>();
 
             services.AddScoped<ITeamDal, TeamDal>();
+            services.AddScoped<IChatDal, ChatDal>();
 
             services.AddScoped<ITeamService, TeamService>();
+            services.AddScoped<IChatService, ChatService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace SupportManagement.DataAccess.Migrations
 {
-    public partial class addedchat : Migration
+    public partial class addedchat2 : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -74,24 +74,12 @@ namespace SupportManagement.DataAccess.Migrations
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Content = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    TeamMemberId = table.Column<int>(type: "int", nullable: false),
                     SentOn = table.Column<DateTime>(type: "datetime2", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Chats", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_Chats_TeamMembers_TeamMemberId",
-                        column: x => x.TeamMemberId,
-                        principalTable: "TeamMembers",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
                 });
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Chats_TeamMemberId",
-                table: "Chats",
-                column: "TeamMemberId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)

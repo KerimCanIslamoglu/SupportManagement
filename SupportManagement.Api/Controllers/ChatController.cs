@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using SupportManagement.Business.Abstract;
+using SupportManagement.Model.Model.Dto.Chat;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,26 +13,30 @@ namespace SupportManagement.Api.Controllers
     public class ChatController : ControllerBase
     {
         private ITeamService _teamService;
+        public IChatService _chatService { get; set; }
 
-        public ChatController(ITeamService teamService)
+        public ChatController(ITeamService teamService, IChatService chatService)
         {
             _teamService = teamService;
+            _chatService = chatService;
         }
 
         [HttpGet]
         [Route("api/[controller]/GetTeams")]
         public IActionResult GetTeams()
         {
-            var teams = _teamService.GetTeamsWithAllTheirMembers();
+            var result = _teamService.GetTeamsWithAllTheirMembers();
 
-            return Ok(teams);
+            return Ok(result);
         }
 
         [HttpPost]
-        [Route("api/[controller]/SupportRequest")]
-        public IActionResult SupportRequest()
+        [Route("api/[controller]/CreateChat")]
+        public IActionResult CreateChat(CreateChatDto createChatDto)
         {
-            return Ok("hi");
+            var result = _chatService.CreateChat(createChatDto);
+
+            return Ok(result);
         }
     }
 }

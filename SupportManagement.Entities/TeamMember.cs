@@ -13,6 +13,6 @@ namespace SupportManagement.Entities
         public int SeniorityId { get; set; }
         public Seniority Seniority { get; set; }
         public Team Team { get; set; }
-        public ICollection<Chat> Chats { get; set; }
+        //public ICollection<Chat> Chats { get; set; }
     }
 }

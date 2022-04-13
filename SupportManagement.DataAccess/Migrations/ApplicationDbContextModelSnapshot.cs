@@ -32,12 +32,7 @@ namespace SupportManagement.DataAccess.Migrations
                     b.Property<DateTime>("SentOn")
                         .HasColumnType("datetime2");
 
-                    b.Property<int>("TeamMemberId")
-                        .HasColumnType("int");
-
                     b.HasKey("Id");
-
-                    b.HasIndex("TeamMemberId");
 
                     b.ToTable("Chats");
                 });
@@ -272,17 +267,6 @@ namespace SupportManagement.DataAccess.Migrations
                         });
                 });
 
-            modelBuilder.Entity("SupportManagement.Entities.Chat", b =>
-                {
-                    b.HasOne("SupportManagement.Entities.TeamMember", "TeamMember")
-                        .WithMany("Chats")
-                        .HasForeignKey("TeamMemberId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("TeamMember");
-                });
-
             modelBuilder.Entity("SupportManagement.Entities.TeamMember", b =>
                 {
                     b.HasOne("SupportManagement.Entities.Seniority", "Seniority")
@@ -310,11 +294,6 @@ namespace SupportManagement.DataAccess.Migrations
             modelBuilder.Entity("SupportManagement.Entities.Team", b =>
                 {
                     b.Navigation("TeamMembers");
-                });
-
-            modelBuilder.Entity("SupportManagement.Entities.TeamMember", b =>
-                {
-                    b.Navigation("Chats");
                 });
 #pragma warning restore 612, 618
         }

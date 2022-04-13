@@ -10,8 +10,8 @@ namespace SupportManagement.Entities
     {
         public int Id { get; set; }
         public string Content { get; set; }
-        public int TeamMemberId { get; set; }
-        public TeamMember TeamMember { get; set; }
         public DateTime SentOn { get; set; }
+        //public int TeamMemberId { get; set; }
+        //public TeamMember TeamMember { get; set; }
     }
 }
