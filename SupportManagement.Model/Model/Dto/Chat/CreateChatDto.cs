@@ -9,5 +9,7 @@ namespace SupportManagement.Model.Model.Dto.Chat
     public class CreateChatDto
     {
         public string Content { get; set; }
+        public int? UserId { get; set; }
+        public int? TeamMemberId { get; set; }
     }
 }

@@ -12,22 +12,11 @@ namespace SupportManagement.Api.Controllers
     [ApiController]
     public class ChatController : ControllerBase
     {
-        private ITeamService _teamService;
         public IChatService _chatService { get; set; }
 
-        public ChatController(ITeamService teamService, IChatService chatService)
+        public ChatController(IChatService chatService)
         {
-            _teamService = teamService;
             _chatService = chatService;
-        }
-
-        [HttpGet]
-        [Route("api/[controller]/GetTeams")]
-        public IActionResult GetTeams()
-        {
-            var result = _teamService.GetTeamsWithAllTheirMembers();
-
-            return Ok(result);
         }
 
         [HttpPost]

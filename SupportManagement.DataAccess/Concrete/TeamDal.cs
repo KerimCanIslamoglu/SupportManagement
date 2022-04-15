@@ -24,6 +24,9 @@ namespace SupportManagement.DataAccess.Concrete
             return _db.Teams
                 .Include(x => x.TeamMembers)
                 .ThenInclude(y=>y.Seniority)
+                .Where(x => x.ShiftStarts <= DateTime.Now.TimeOfDay
+                    && x.ShiftEnds >= DateTime.Now.TimeOfDay
+                    && x.IsOverflowTeam == false)
                 .ToList();
         }
     }

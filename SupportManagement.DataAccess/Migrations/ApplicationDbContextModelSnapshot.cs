@@ -32,7 +32,17 @@ namespace SupportManagement.DataAccess.Migrations
                     b.Property<DateTime>("SentOn")
                         .HasColumnType("datetime2");
 
+                    b.Property<int>("TeamMemberId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("UserId")
+                        .HasColumnType("int");
+
                     b.HasKey("Id");
+
+                    b.HasIndex("TeamMemberId");
+
+                    b.HasIndex("UserId");
 
                     b.ToTable("Chats");
                 });
@@ -107,6 +117,9 @@ namespace SupportManagement.DataAccess.Migrations
                     b.Property<string>("TeamName")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<bool>("WorksInOfficeHours")
+                        .HasColumnType("bit");
+
                     b.HasKey("Id");
 
                     b.ToTable("Teams");
@@ -118,7 +131,8 @@ namespace SupportManagement.DataAccess.Migrations
                             IsOverflowTeam = false,
                             ShiftEnds = new TimeSpan(0, 15, 59, 59, 0),
                             ShiftStarts = new TimeSpan(0, 8, 0, 0, 0),
-                            TeamName = "Team A"
+                            TeamName = "Team A",
+                            WorksInOfficeHours = true
                         },
                         new
                         {
@@ -126,7 +140,8 @@ namespace SupportManagement.DataAccess.Migrations
                             IsOverflowTeam = false,
                             ShiftEnds = new TimeSpan(0, 23, 59, 59, 0),
                             ShiftStarts = new TimeSpan(0, 16, 0, 0, 0),
-                            TeamName = "Team B"
+                            TeamName = "Team B",
+                            WorksInOfficeHours = false
                         },
                         new
                         {
@@ -134,7 +149,8 @@ namespace SupportManagement.DataAccess.Migrations
                             IsOverflowTeam = false,
                             ShiftEnds = new TimeSpan(0, 7, 59, 59, 0),
                             ShiftStarts = new TimeSpan(0, 0, 0, 0, 0),
-                            TeamName = "Team C"
+                            TeamName = "Team C",
+                            WorksInOfficeHours = false
                         },
                         new
                         {
@@ -142,7 +158,8 @@ namespace SupportManagement.DataAccess.Migrations
                             IsOverflowTeam = true,
                             ShiftEnds = new TimeSpan(0, 23, 59, 59, 0),
                             ShiftStarts = new TimeSpan(0, 0, 0, 0, 0),
-                            TeamName = "Overflow Team"
+                            TeamName = "Overflow Team",
+                            WorksInOfficeHours = true
                         });
                 });
 
@@ -153,6 +170,9 @@ namespace SupportManagement.DataAccess.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+                    b.Property<string>("QueueName")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<int>("SeniorityId")
                         .HasColumnType("int");
 
@@ -161,8 +181,7 @@ namespace SupportManagement.DataAccess.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("SeniorityId")
-                        .IsUnique();
+                    b.HasIndex("SeniorityId");
 
                     b.HasIndex("TeamId");
 
@@ -172,106 +191,163 @@ namespace SupportManagement.DataAccess.Migrations
                         new
                         {
                             Id = 1,
+                            QueueName = "member_1",
                             SeniorityId = 4,
                             TeamId = 1
                         },
                         new
                         {
                             Id = 2,
+                            QueueName = "member_2",
                             SeniorityId = 2,
                             TeamId = 1
                         },
                         new
                         {
                             Id = 3,
+                            QueueName = "member_3",
                             SeniorityId = 2,
                             TeamId = 1
                         },
                         new
                         {
                             Id = 4,
+                            QueueName = "member_4",
                             SeniorityId = 1,
                             TeamId = 1
                         },
                         new
                         {
                             Id = 5,
+                            QueueName = "member_5",
                             SeniorityId = 3,
                             TeamId = 2
                         },
                         new
                         {
                             Id = 6,
+                            QueueName = "member_6",
                             SeniorityId = 2,
                             TeamId = 2
                         },
                         new
                         {
                             Id = 7,
+                            QueueName = "member_7",
                             SeniorityId = 1,
                             TeamId = 2
                         },
                         new
                         {
                             Id = 8,
+                            QueueName = "member_8",
                             SeniorityId = 1,
                             TeamId = 2
                         },
                         new
                         {
                             Id = 9,
+                            QueueName = "member_9",
                             SeniorityId = 2,
                             TeamId = 3
                         },
                         new
                         {
                             Id = 10,
+                            QueueName = "member_10",
                             SeniorityId = 2,
                             TeamId = 3
                         },
                         new
                         {
                             Id = 11,
+                            QueueName = "member_11",
                             SeniorityId = 1,
                             TeamId = 4
                         },
                         new
                         {
                             Id = 12,
+                            QueueName = "member_12",
                             SeniorityId = 1,
                             TeamId = 4
                         },
                         new
                         {
                             Id = 13,
+                            QueueName = "member_13",
                             SeniorityId = 1,
                             TeamId = 4
                         },
                         new
                         {
                             Id = 14,
+                            QueueName = "member_14",
                             SeniorityId = 1,
                             TeamId = 4
                         },
                         new
                         {
                             Id = 15,
+                            QueueName = "member_15",
                             SeniorityId = 1,
                             TeamId = 4
                         },
                         new
                         {
                             Id = 16,
+                            QueueName = "member_16",
                             SeniorityId = 1,
                             TeamId = 4
                         });
                 });
 
+            modelBuilder.Entity("SupportManagement.Entities.User", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("UserName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Users");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            UserName = "User 1"
+                        });
+                });
+
+            modelBuilder.Entity("SupportManagement.Entities.Chat", b =>
+                {
+                    b.HasOne("SupportManagement.Entities.TeamMember", "TeamMember")
+                        .WithMany("Chats")
+                        .HasForeignKey("TeamMemberId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("SupportManagement.Entities.User", "User")
+                        .WithMany("Chats")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("TeamMember");
+
+                    b.Navigation("User");
+                });
+
             modelBuilder.Entity("SupportManagement.Entities.TeamMember", b =>
                 {
                     b.HasOne("SupportManagement.Entities.Seniority", "Seniority")
-                        .WithOne("TeamMember")
-                        .HasForeignKey("SupportManagement.Entities.TeamMember", "SeniorityId")
+                        .WithMany("TeamMembers")
+                        .HasForeignKey("SeniorityId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -288,12 +364,22 @@ namespace SupportManagement.DataAccess.Migrations
 
             modelBuilder.Entity("SupportManagement.Entities.Seniority", b =>
                 {
-                    b.Navigation("TeamMember");
+                    b.Navigation("TeamMembers");
                 });
 
             modelBuilder.Entity("SupportManagement.Entities.Team", b =>
                 {
                     b.Navigation("TeamMembers");
+                });
+
+            modelBuilder.Entity("SupportManagement.Entities.TeamMember", b =>
+                {
+                    b.Navigation("Chats");
+                });
+
+            modelBuilder.Entity("SupportManagement.Entities.User", b =>
+                {
+                    b.Navigation("Chats");
                 });
 #pragma warning restore 612, 618
         }

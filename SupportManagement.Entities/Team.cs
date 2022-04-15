@@ -13,6 +13,7 @@ namespace SupportManagement.Entities
         public TimeSpan ShiftStarts { get; set; }
         public TimeSpan ShiftEnds { get; set; }
         public bool IsOverflowTeam { get; set; }
+        public bool WorksInOfficeHours { get; set; }
 
         public ICollection<TeamMember> TeamMembers { get; set; }
     }

@@ -1,5 +1,5 @@
 ﻿using SupportManagement.Model.Model;
-using SupportManagement.Model.Model.Dto.Team;
+using SupportManagement.Model.Model.Dto.TeamMember;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,9 +8,8 @@ using System.Threading.Tasks;
 
 namespace SupportManagement.Business.Abstract
 {
-    public interface ITeamService
+    public interface ITeamMemberService
     {
-        ResponseModel<List<TeamDto>> GetAvailableTeamWithAllTheirMembers();
-        ResponseModel<List<TeamDto>> GetTeams();
+        ResponseModel<List<TeamMemberDto>> GetTeamMembers();
     }
 }

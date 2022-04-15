@@ -22,15 +22,27 @@ namespace SupportManagement.DataAccess.Context
                  .WithMany(tm => tm.TeamMembers)
                  .HasForeignKey(fk => fk.TeamId);
 
-            modelBuilder.Entity<Seniority>()
-               .HasOne(t => t.TeamMember)
-               .WithOne(tm => tm.Seniority)
-               .HasForeignKey<TeamMember>(fk => fk.SeniorityId);
+            modelBuilder.Entity<TeamMember>()
+               .HasOne(t => t.Seniority)
+               .WithMany(tm => tm.TeamMembers)
+               .HasForeignKey(fk => fk.SeniorityId);
 
-            //modelBuilder.Entity<Chat>()
-            //    .HasOne(t => t.TeamMember)
-            //    .WithMany(tm => tm.Chats)
-            //    .HasForeignKey(fk => fk.TeamMemberId);
+            modelBuilder.Entity<Chat>()
+               .HasOne(t => t.User)
+               .WithMany(tm => tm.Chats)
+               .HasForeignKey(fk => fk.UserId);
+
+            modelBuilder.Entity<Chat>()
+               .HasOne(t => t.TeamMember)
+               .WithMany(tm => tm.Chats)
+               .HasForeignKey(fk => fk.TeamMemberId);
+
+            modelBuilder.Entity<User>().HasData(
+              new User
+              {
+                  Id=1,
+                  UserName="User 1"
+              });
 
             modelBuilder.Entity<Seniority>().HasData(
               new Seniority
@@ -38,7 +50,7 @@ namespace SupportManagement.DataAccess.Context
                   Id = 1,
                   SeniorityName = "Junior",
                   Multiplier = 0.4,
-                  AssignmentOrder=1
+                  AssignmentOrder = 1
               },
               new Seniority
               {
@@ -69,7 +81,8 @@ namespace SupportManagement.DataAccess.Context
                    TeamName = "Team A",
                    ShiftStarts = new TimeSpan(8, 0, 0),
                    ShiftEnds = new TimeSpan(15, 59, 59),
-                   IsOverflowTeam = false
+                   IsOverflowTeam = false,
+                   WorksInOfficeHours = true,
                },
                new Team
                {
@@ -77,7 +90,8 @@ namespace SupportManagement.DataAccess.Context
                    TeamName = "Team B",
                    ShiftStarts = new TimeSpan(16, 0, 0),
                    ShiftEnds = new TimeSpan(23, 59, 59),
-                   IsOverflowTeam = false
+                   IsOverflowTeam = false,
+                   WorksInOfficeHours = false,
                },
                new Team
                {
@@ -85,7 +99,8 @@ namespace SupportManagement.DataAccess.Context
                    TeamName = "Team C",
                    ShiftStarts = new TimeSpan(0, 0, 0),
                    ShiftEnds = new TimeSpan(7, 59, 59),
-                   IsOverflowTeam = false
+                   IsOverflowTeam = false,
+                   WorksInOfficeHours = false,
                },
                new Team
                {
@@ -93,33 +108,38 @@ namespace SupportManagement.DataAccess.Context
                    TeamName = "Overflow Team",
                    ShiftStarts = new TimeSpan(0, 0, 0),
                    ShiftEnds = new TimeSpan(23, 59, 59),
-                   IsOverflowTeam = true
+                   IsOverflowTeam = true,
+                   WorksInOfficeHours = true,
                });
 
             modelBuilder.Entity<TeamMember>().HasData(
                new TeamMember
                {
                    Id = 1,
-                   TeamId=1,
-                   SeniorityId=4
+                   TeamId = 1,
+                   SeniorityId = 4,
+                   QueueName="member_1"
                },
                new TeamMember
                {
                    Id = 2,
                    TeamId = 1,
-                   SeniorityId = 2
+                   SeniorityId = 2,
+                   QueueName = "member_2"
                },
                new TeamMember
                {
-                    Id = 3,
-                    TeamId = 1,
-                    SeniorityId = 2
+                   Id = 3,
+                   TeamId = 1,
+                   SeniorityId = 2,
+                   QueueName = "member_3"
                },
                new TeamMember
                {
                    Id = 4,
                    TeamId = 1,
-                   SeniorityId = 1
+                   SeniorityId = 1,
+                   QueueName = "member_4"
                },
 
 
@@ -127,25 +147,29 @@ namespace SupportManagement.DataAccess.Context
                {
                    Id = 5,
                    TeamId = 2,
-                   SeniorityId = 3
+                   SeniorityId = 3,
+                   QueueName = "member_5"
                },
                new TeamMember
                {
                    Id = 6,
                    TeamId = 2,
-                   SeniorityId = 2
+                   SeniorityId = 2,
+                   QueueName = "member_6"
                },
                new TeamMember
                {
                    Id = 7,
                    TeamId = 2,
-                   SeniorityId = 1
+                   SeniorityId = 1,
+                   QueueName = "member_7"
                },
                new TeamMember
                {
                    Id = 8,
                    TeamId = 2,
-                   SeniorityId = 1
+                   SeniorityId = 1,
+                   QueueName = "member_8"
                },
 
 
@@ -153,13 +177,15 @@ namespace SupportManagement.DataAccess.Context
                {
                    Id = 9,
                    TeamId = 3,
-                   SeniorityId = 2
+                   SeniorityId = 2,
+                   QueueName = "member_9"
                },
                new TeamMember
                {
-                    Id = 10,
-                    TeamId = 3,
-                    SeniorityId = 2
+                   Id = 10,
+                   TeamId = 3,
+                   SeniorityId = 2,
+                   QueueName = "member_10"
                },
 
 
@@ -167,37 +193,43 @@ namespace SupportManagement.DataAccess.Context
                {
                    Id = 11,
                    TeamId = 4,
-                   SeniorityId = 1
+                   SeniorityId = 1,
+                   QueueName = "member_11"
                },
                new TeamMember
                {
                    Id = 12,
                    TeamId = 4,
-                   SeniorityId = 1
+                   SeniorityId = 1,
+                   QueueName = "member_12"
                },
                new TeamMember
                {
                    Id = 13,
                    TeamId = 4,
-                   SeniorityId = 1
+                   SeniorityId = 1,
+                   QueueName = "member_13"
                },
                new TeamMember
                {
                    Id = 14,
                    TeamId = 4,
-                   SeniorityId = 1
+                   SeniorityId = 1,
+                   QueueName = "member_14"
                },
                new TeamMember
                {
                    Id = 15,
                    TeamId = 4,
-                   SeniorityId = 1
+                   SeniorityId = 1,
+                   QueueName = "member_15"
                },
                new TeamMember
                {
                    Id = 16,
                    TeamId = 4,
-                   SeniorityId = 1
+                   SeniorityId = 1,
+                   QueueName = "member_16"
                });
 
             base.OnModelCreating(modelBuilder);
@@ -207,5 +239,6 @@ namespace SupportManagement.DataAccess.Context
         public DbSet<TeamMember> TeamMembers { get; set; }
         public DbSet<Seniority> Seniorities { get; set; }
         public DbSet<Chat> Chats { get; set; }
+        public DbSet<User> Users { get; set; }
     }
 }

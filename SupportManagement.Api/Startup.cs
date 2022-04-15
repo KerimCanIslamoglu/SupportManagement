@@ -12,6 +12,7 @@ using SupportManagement.Business.Concrete;
 using SupportManagement.DataAccess.Abstract;
 using SupportManagement.DataAccess.Concrete;
 using SupportManagement.DataAccess.Context;
+using SupportManagement.Helper.Converter;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -37,12 +38,17 @@ namespace SupportManagement.Api
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "SupportManagement.Api", Version = "v1" });
             });
 
+            services.AddControllers()
+                .AddJsonOptions(options => options.JsonSerializerOptions.Converters.Add(new TimeSpanToStringConverter()));
+
             services.AddDbContext<ApplicationDbContext>();
 
             services.AddScoped<ITeamDal, TeamDal>();
+            services.AddScoped<ITeamMemberDal, TeamMemberDal>();
             services.AddScoped<IChatDal, ChatDal>();
 
             services.AddScoped<ITeamService, TeamService>();
+            services.AddScoped<ITeamMemberService, TeamMemberService>();
             services.AddScoped<IChatService, ChatService>();
         }
 

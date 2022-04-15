@@ -14,7 +14,6 @@ namespace SupportManagement.Model.Model.Dto.Team
         public TimeSpan ShiftStarts { get; set; }
         public TimeSpan ShiftEnds { get; set; }
         public bool IsOverflowTeam { get; set; }
-
         public ICollection<TeamMemberDto> TeamMembers { get; set; }
     }
 }

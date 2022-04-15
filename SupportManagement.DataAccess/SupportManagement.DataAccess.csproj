@@ -15,6 +15,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\SupportManagement.Entities\SupportManagement.Entities.csproj" />
+    <ProjectReference Include="..\SupportManagement.Helper\SupportManagement.Helper.csproj" />
   </ItemGroup>
 
 </Project>

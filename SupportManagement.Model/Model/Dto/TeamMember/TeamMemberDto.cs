@@ -12,8 +12,9 @@ namespace SupportManagement.Model.Model.Dto.TeamMember
     {
         public int Id { get; set; }
         public int TeamId { get; set; }
+        public TeamDto Team { get; set; }
         public int SeniorityId { get; set; }
         public SeniorityDto Seniority { get; set; }
-        public TeamDto Team { get; set; }
+        public string QueueName { get; set; }
     }
 }

@@ -12,6 +12,6 @@ namespace SupportManagement.Entities
         public string SeniorityName { get; set; }
         public double Multiplier { get; set; }
         public int AssignmentOrder { get; set; }
-        public TeamMember TeamMember { get; set; }
+        public ICollection<TeamMember> TeamMembers { get; set; }
     }
 }
