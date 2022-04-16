@@ -1,4 +1,5 @@
-﻿using SupportManagement.DataAccess.Abstract;
+﻿using Microsoft.EntityFrameworkCore;
+using SupportManagement.DataAccess.Abstract;
 using SupportManagement.DataAccess.Context;
 using SupportManagement.Entities;
 using System;
@@ -16,6 +17,24 @@ namespace SupportManagement.DataAccess.Concrete
         public TeamMemberDal(ApplicationDbContext db)
         {
             _db = db;
+        }
+
+        public List<TeamMember> GetTeamMembersByTeamId(int teamId)
+        {
+            return _db.TeamMembers
+                .Include(x => x.Seniority)
+                .Include(x => x.Team)
+                .Where(x => x.TeamId == teamId)
+                .ToList();
+        }
+
+        public List<TeamMember> GetTeamMemberWithSupportQueue(int teamId)
+        {
+            return _db.TeamMembers
+                 .Include(x => x.Seniority)
+                 .Include(x => x.SupportQueues.Where(x => x.AssignedOn.Value.Day == DateTime.Now.Day && x.IsAvailable == true).OrderBy(x => x.TeamMember.Seniority.AssignmentOrder))
+                 .Where(x => x.TeamId == teamId)
+                 .ToList();
         }
     }
 }

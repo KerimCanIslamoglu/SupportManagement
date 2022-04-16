@@ -15,5 +15,6 @@ namespace SupportManagement.Entities
         public Team Team { get; set; }
         public string QueueName { get; set; }
         public ICollection<Chat> Chats { get; set; }
+        public ICollection<SupportQueue> SupportQueues { get; set; }
     }
 }

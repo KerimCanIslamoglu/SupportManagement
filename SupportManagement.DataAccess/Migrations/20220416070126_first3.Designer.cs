@@ -10,8 +10,8 @@ using SupportManagement.DataAccess.Context;
 namespace SupportManagement.DataAccess.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20220415133220_first2")]
-    partial class first2
+    [Migration("20220416070126_first3")]
+    partial class first3
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -98,6 +98,32 @@ namespace SupportManagement.DataAccess.Migrations
                             Multiplier = 0.5,
                             SeniorityName = "Team Lead"
                         });
+                });
+
+            modelBuilder.Entity("SupportManagement.Entities.SupportQueue", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<DateTime?>("AssignedOn")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("CreatedOn")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool>("IsAvailable")
+                        .HasColumnType("bit");
+
+                    b.Property<int>("TeamMemberId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("TeamMemberId");
+
+                    b.ToTable("SupportQueues");
                 });
 
             modelBuilder.Entity("SupportManagement.Entities.Team", b =>
@@ -345,6 +371,17 @@ namespace SupportManagement.DataAccess.Migrations
                     b.Navigation("User");
                 });
 
+            modelBuilder.Entity("SupportManagement.Entities.SupportQueue", b =>
+                {
+                    b.HasOne("SupportManagement.Entities.TeamMember", "TeamMember")
+                        .WithMany("SupportQueues")
+                        .HasForeignKey("TeamMemberId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("TeamMember");
+                });
+
             modelBuilder.Entity("SupportManagement.Entities.TeamMember", b =>
                 {
                     b.HasOne("SupportManagement.Entities.Seniority", "Seniority")
@@ -377,6 +414,8 @@ namespace SupportManagement.DataAccess.Migrations
             modelBuilder.Entity("SupportManagement.Entities.TeamMember", b =>
                 {
                     b.Navigation("Chats");
+
+                    b.Navigation("SupportQueues");
                 });
 
             modelBuilder.Entity("SupportManagement.Entities.User", b =>

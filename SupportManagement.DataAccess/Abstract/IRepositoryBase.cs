@@ -14,6 +14,7 @@ namespace SupportManagement.DataAccess.Abstract
         List<T> GetAll(Expression<Func<T, bool>> filter = null);
 
         void Create(T entity);
+        void CreateAll(List<T> entity);
         void Update(T entity);
         void Delete(T entity);
     }

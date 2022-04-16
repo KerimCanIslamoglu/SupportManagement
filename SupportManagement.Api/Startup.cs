@@ -46,10 +46,12 @@ namespace SupportManagement.Api
             services.AddScoped<ITeamDal, TeamDal>();
             services.AddScoped<ITeamMemberDal, TeamMemberDal>();
             services.AddScoped<IChatDal, ChatDal>();
+            services.AddScoped<ISupportQueueDal, SupportQueueDal>();
 
             services.AddScoped<ITeamService, TeamService>();
             services.AddScoped<ITeamMemberService, TeamMemberService>();
             services.AddScoped<IChatService, ChatService>();
+            services.AddScoped<ISupportQueueService, SupportQueueService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

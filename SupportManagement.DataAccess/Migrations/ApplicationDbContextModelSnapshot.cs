@@ -98,6 +98,32 @@ namespace SupportManagement.DataAccess.Migrations
                         });
                 });
 
+            modelBuilder.Entity("SupportManagement.Entities.SupportQueue", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<DateTime?>("AssignedOn")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("CreatedOn")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool>("IsAvailable")
+                        .HasColumnType("bit");
+
+                    b.Property<int>("TeamMemberId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("TeamMemberId");
+
+                    b.ToTable("SupportQueues");
+                });
+
             modelBuilder.Entity("SupportManagement.Entities.Team", b =>
                 {
                     b.Property<int>("Id")
@@ -343,6 +369,17 @@ namespace SupportManagement.DataAccess.Migrations
                     b.Navigation("User");
                 });
 
+            modelBuilder.Entity("SupportManagement.Entities.SupportQueue", b =>
+                {
+                    b.HasOne("SupportManagement.Entities.TeamMember", "TeamMember")
+                        .WithMany("SupportQueues")
+                        .HasForeignKey("TeamMemberId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("TeamMember");
+                });
+
             modelBuilder.Entity("SupportManagement.Entities.TeamMember", b =>
                 {
                     b.HasOne("SupportManagement.Entities.Seniority", "Seniority")
@@ -375,6 +412,8 @@ namespace SupportManagement.DataAccess.Migrations
             modelBuilder.Entity("SupportManagement.Entities.TeamMember", b =>
                 {
                     b.Navigation("Chats");
+
+                    b.Navigation("SupportQueues");
                 });
 
             modelBuilder.Entity("SupportManagement.Entities.User", b =>

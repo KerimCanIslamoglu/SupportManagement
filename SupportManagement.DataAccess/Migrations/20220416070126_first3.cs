@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace SupportManagement.DataAccess.Migrations
 {
-    public partial class first2 : Migration
+    public partial class first3 : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -107,6 +107,28 @@ namespace SupportManagement.DataAccess.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
+            migrationBuilder.CreateTable(
+                name: "SupportQueues",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    TeamMemberId = table.Column<int>(type: "int", nullable: false),
+                    IsAvailable = table.Column<bool>(type: "bit", nullable: false),
+                    AssignedOn = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    CreatedOn = table.Column<DateTime>(type: "datetime2", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_SupportQueues", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_SupportQueues_TeamMembers_TeamMemberId",
+                        column: x => x.TeamMemberId,
+                        principalTable: "TeamMembers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
             migrationBuilder.InsertData(
                 table: "Seniorities",
                 columns: new[] { "Id", "AssignmentOrder", "Multiplier", "SeniorityName" },
@@ -168,6 +190,11 @@ namespace SupportManagement.DataAccess.Migrations
                 column: "UserId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_SupportQueues_TeamMemberId",
+                table: "SupportQueues",
+                column: "TeamMemberId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_TeamMembers_SeniorityId",
                 table: "TeamMembers",
                 column: "SeniorityId");
@@ -184,10 +211,13 @@ namespace SupportManagement.DataAccess.Migrations
                 name: "Chats");
 
             migrationBuilder.DropTable(
-                name: "TeamMembers");
+                name: "SupportQueues");
 
             migrationBuilder.DropTable(
                 name: "Users");
+
+            migrationBuilder.DropTable(
+                name: "TeamMembers");
 
             migrationBuilder.DropTable(
                 name: "Seniorities");

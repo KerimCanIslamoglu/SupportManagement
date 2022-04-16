@@ -22,6 +22,15 @@ namespace SupportManagement.DataAccess.Concrete
             }
         }
 
+        public void CreateAll(List<T> entity)
+        {
+            using (var context = new TContext())
+            {
+                context.Set<T>().AddRange(entity);
+                context.SaveChanges();
+            }
+        }
+
         public virtual void Delete(T entity)
         {
             using (var context = new TContext())

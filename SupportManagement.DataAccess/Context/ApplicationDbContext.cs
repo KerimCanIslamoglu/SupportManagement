@@ -37,6 +37,11 @@ namespace SupportManagement.DataAccess.Context
                .WithMany(tm => tm.Chats)
                .HasForeignKey(fk => fk.TeamMemberId);
 
+            modelBuilder.Entity<SupportQueue>()
+               .HasOne(t => t.TeamMember)
+               .WithMany(tm => tm.SupportQueues)
+               .HasForeignKey(fk => fk.TeamMemberId);
+
             modelBuilder.Entity<User>().HasData(
               new User
               {
@@ -240,5 +245,6 @@ namespace SupportManagement.DataAccess.Context
         public DbSet<Seniority> Seniorities { get; set; }
         public DbSet<Chat> Chats { get; set; }
         public DbSet<User> Users { get; set; }
+        public DbSet<SupportQueue> SupportQueues { get; set; }
     }
 }

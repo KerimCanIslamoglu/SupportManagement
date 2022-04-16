@@ -7,9 +7,9 @@ using System.Threading.Tasks;
 
 namespace SupportManagement.DataAccess.Abstract
 {
-    public interface ITeamMemberDal : IRepositoryBase<TeamMember>
+    public interface ISupportQueueDal : IRepositoryBase<SupportQueue>
     {
-        List<TeamMember> GetTeamMemberWithSupportQueue(int teamId);
-        List<TeamMember> GetTeamMembersByTeamId(int teamId);
+        List<SupportQueue> GetSupportQueueByTeamId(int teamId);
+        SupportQueue GetNextAvailableSupportQueueByTeamId(int teamId);
     }
 }
