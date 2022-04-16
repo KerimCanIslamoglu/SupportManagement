@@ -51,47 +51,6 @@ namespace SupportManagement.ChatCoordinator
                 channel.BasicConsume(queue: queueName, autoAck: true, consumer: consumer);
 
                 Console.ReadKey();
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-                //await Task.Run(async () =>
-                //{
-                //    while (true)
-                //    {
-                //        CreateChatDto chat = new CreateChatDto
-                //        {
-                //            Content = Console.ReadLine(),
-                //             UserId=1  
-                //        };
-
-                //        var result =await restApiGenerator.PostApi<ResponseModel<CreateChatDto>>(chat, "http://localhost:53502/api/Chat/CreateChat");
-                //    }
-                //});
             }
         }
     }
