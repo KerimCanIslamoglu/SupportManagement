@@ -36,7 +36,7 @@ namespace SupportManagement.ChatCoordinator
                                 routingKey: teamMember.QueueName);
                 }
 
-                Console.WriteLine(" [*] Waiting for chats.");
+                Console.WriteLine(" [*] Teams chat window.");
                 Console.WriteLine(" Please type something and press enter...");
 
                 var consumer = new EventingBasicConsumer(channel);
@@ -45,12 +45,28 @@ namespace SupportManagement.ChatCoordinator
                     var body = ea.Body.ToArray();
                     var message = Encoding.UTF8.GetString(body);
                     var routingKey = ea.RoutingKey;
-                    Console.WriteLine("'{0}':'{1}'", routingKey, message);
+                    Console.WriteLine("'{0}'", message);
                     Console.WriteLine("");
                 };
                 channel.BasicConsume(queue: queueName, autoAck: true, consumer: consumer);
 
-                Console.ReadKey();
+                await Task.Run(async () =>
+                {
+                    while (true)
+                    {
+                        CreateChatDto chat = new CreateChatDto
+                        {
+                            Content = Console.ReadLine(),
+                            UserId = 1,
+                            IsSentByUser=false
+                        };
+
+                        var result = await restApiGenerator.PostApi<ResponseModel<CreateChatDto>>(chat, "http://localhost:53502/api/Chat/CreateChat");
+
+                        if (!result.Success)
+                            Console.WriteLine("The session is full");
+                    }
+                });
             }
         }
     }

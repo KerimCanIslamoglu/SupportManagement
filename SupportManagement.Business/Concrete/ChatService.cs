@@ -49,14 +49,17 @@ namespace SupportManagement.Business.Concrete
                     SentOn = DateTime.Now
                 });
 
-                _supportQueueDal.Update(new SupportQueue
+                if (createChatDto.IsSentByUser)
                 {
-                    Id = availableQueue.Id,
-                    AssignedOn = DateTime.Now,
-                    IsAvailable = false,
-                    TeamMemberId = availableQueue.TeamMemberId,
-                    CreatedOn = availableQueue.CreatedOn
-                });
+                    _supportQueueDal.Update(new SupportQueue
+                    {
+                        Id = availableQueue.Id,
+                        AssignedOn = DateTime.Now,
+                        IsAvailable = false,
+                        TeamMemberId = availableQueue.TeamMemberId,
+                        CreatedOn = availableQueue.CreatedOn
+                    });
+                }
 
                 var factory = new ConnectionFactory() { HostName = "localhost" };
                 using (var connection = factory.CreateConnection())
