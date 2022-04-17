@@ -3,13 +3,14 @@
 
 ### Tech Stack
 
-- C#, .Net 5.0, RabbitMQ, Entity Framework Core, Code First, MSSQL , Swagger
+- C#, .Net 5.0, RabbitMQ, Entity Framework Core, Code First, MSSQL, Swagger
 
 ### Requirements
 
 - .Net 5.0, RabbitMQ (or use docker instead) and Sql Server must be installed on your machine.
 
 ### Docker for RabbitMQ
+
 - docker run -d --hostname my-rabbitmq-server --name rabbitmq -p 5672:5672 -p 15672:15672 rabbitmq:3-management
 
 ### For starter
